@@ -4,3 +4,4 @@
 - Remove unnecessary code and created a hello world app
 - Install tailwindCSS
 - Install daisyui
+- Add navbar component to app.jsx
