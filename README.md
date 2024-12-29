@@ -20,3 +20,4 @@
 - See if your data is coming on that store or not
 - Navbar should be updated as soon as user logged in
 - Refactor our code to add constant file + create a components folder
+- You should not be access to other routes login
