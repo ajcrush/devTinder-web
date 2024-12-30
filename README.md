@@ -22,3 +22,5 @@
 - Refactor our code to add constant file + create a components folder
 - You should not be access to other routes login
 - If token is not present redirect user to login page
+- Logout feature added with dynamic error in login page
+-
