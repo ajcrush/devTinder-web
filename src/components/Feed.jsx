@@ -21,6 +21,9 @@ const Feed = () => {
   useEffect(() => {
     getFeed();
   }, []);
+  if (!feed || feed.length === 0) {
+    return <div>No feed available.</div>; // Show message if the feed is empty
+  }
   return (
     feed && (
       <div className="flex justify-center my-10 ">

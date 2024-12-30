@@ -23,4 +23,4 @@
 - You should not be access to other routes login
 - If token is not present redirect user to login page
 - Logout feature added with dynamic error in login page
--
+- get the feed and add the feed in the store
