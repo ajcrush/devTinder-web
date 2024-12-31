@@ -24,3 +24,6 @@
 - If token is not present redirect user to login page
 - Logout feature added with dynamic error in login page
 - get the feed and add the feed in the store
+- Build the user card on feed
+- Edit profile features build show toast message on save profile
+- See all my connections
