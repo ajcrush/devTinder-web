@@ -26,4 +26,5 @@
 - get the feed and add the feed in the store
 - Build the user card on feed
 - Edit profile features build show toast message on save profile
-- See all my connections
+- New page - See all my connections
+- New page - See all my connection requests

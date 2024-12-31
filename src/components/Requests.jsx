@@ -1,40 +1,40 @@
 import axios from "axios";
 import { BASE_URL } from "../utils/constant";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setConnections } from "../utils/connectionSlice";
+import { addRequest } from "../utils/requestSlice";
+import { useEffect } from "react";
 
-const Connections = () => {
+const Requests = () => {
+  const requests = useSelector((store) => store.request);
   const dispatch = useDispatch();
-  const connections = useSelector((store) => store.connection); // Correct key
-
-  const fetchConnections = async () => {
+  const fetchRequest = async () => {
     try {
-      const res = await axios.get(BASE_URL + "/user/connections", {
+      const res = await axios.get(BASE_URL + "/user/request/received", {
         withCredentials: true,
       });
-      dispatch(setConnections(res?.data?.data));
+      dispatch(addRequest(res?.data?.data));
     } catch (err) {
       console.log(err.message);
     }
   };
-
   useEffect(() => {
-    fetchConnections();
+    fetchRequest();
   }, []);
-
-  if (!connections || connections.length === 0) {
+  if (!requests || requests.length === 0) {
     return <h1>No connection found</h1>;
   }
 
   return (
     <div className=" text-center my-10 ">
-      <h1 className="text-3xl text-white ">Connections</h1>
-      {connections.map((connection) => {
+      <h1 className="text-3xl text-white ">Connection Requests</h1>
+      {requests.map((connection) => {
         const { _id, firstName, lastName, age, gender, photoUrl, about } =
-          connection;
+          connection.fromUserId;
         return (
-          <div key={_id} className=" flex m-4 p-4  bg-base-300 w-1/2 mx-auto">
+          <div
+            key={_id}
+            className=" flex justify-between items-center m-4 p-4  bg-base-300 w-1/2 mx-auto"
+          >
             <div>
               <img
                 className="w-20 h-20 rounded-full"
@@ -46,8 +46,12 @@ const Connections = () => {
               <h2 className="font-bold text-xl">
                 {firstName + " " + lastName}
               </h2>
-              {about && <p>{about}</p>}
               {age && gender && <p>{age + " , " + gender}</p>}
+              {about && <p>{about}</p>}
+            </div>
+            <div>
+              <button className="btn btn-primary mx-4">Accept</button>
+              <button className="btn btn-secondary">Reject</button>
             </div>
           </div>
         );
@@ -56,4 +60,4 @@ const Connections = () => {
   );
 };
 
-export default Connections;
+export default Requests;
