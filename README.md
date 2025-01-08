@@ -30,8 +30,5 @@
 - New page - See all my connection requests
 - feature accept/reject connection request
 - Send or ignore card from feed
-
-Remaining
-
 - signup page
 - ETE testing

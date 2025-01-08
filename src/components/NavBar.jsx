@@ -8,6 +8,7 @@ const NavBar = () => {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleLogout = async () => {
     try {
       await axios.post(
@@ -23,6 +24,7 @@ const NavBar = () => {
       console.error(err);
     }
   };
+
   return (
     <div className="navbar bg-base-300">
       <div className="flex-1">
@@ -30,9 +32,9 @@ const NavBar = () => {
           🧑🏻‍💻 DevTinder
         </Link>
       </div>
-      {user && (
+      {user ? (
         <div className="flex-none gap-2">
-          <div className="form-control">Welcome, {user.data.firstName}</div>
+          <div className="form-control">Welcome, {user?.data?.firstName}</div>
           <div className="dropdown dropdown-end mx-5 flex">
             <div
               tabIndex={0}
@@ -40,10 +42,12 @@ const NavBar = () => {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src={user.data.photoUrl}
-                />
+                {user?.data?.photoUrl && (
+                  <img
+                    alt="Tailwind CSS Navbar component"
+                    src={user.data.photoUrl}
+                  />
+                )}
               </div>
             </div>
             <ul
@@ -68,8 +72,15 @@ const NavBar = () => {
             </ul>
           </div>
         </div>
+      ) : (
+        <div>
+          <Link to="/login" className="btn btn-primary">
+            Login
+          </Link>
+        </div>
       )}
     </div>
   );
 };
+
 export default NavBar;

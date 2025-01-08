@@ -4,14 +4,14 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constant";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
-
+import { useEffect } from "react";
 const EditProfile = ({ user }) => {
-  const [firstName, setFirstName] = useState(user.data.firstName || "");
-  const [lastName, setLastName] = useState(user.data.lastName || "");
-  const [photoUrl, setPhotoUrl] = useState(user.data.photoUrl || "");
-  const [gender, setGender] = useState(user.data.gender || "");
-  const [age, setAge] = useState(user.data.age || "");
-  const [about, setAbout] = useState(user.data.about || "");
+  const [firstName, setFirstName] = useState(user?.data?.firstName || "");
+  const [lastName, setLastName] = useState(user?.data?.lastName || "");
+  const [photoUrl, setPhotoUrl] = useState(user?.data?.photoUrl || "");
+  const [gender, setGender] = useState(user?.data?.gender || "");
+  const [age, setAge] = useState(user?.data?.age || "");
+  const [about, setAbout] = useState(user?.data?.about || "");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const dispatch = useDispatch();
@@ -49,6 +49,14 @@ const EditProfile = ({ user }) => {
       );
     }
   };
+  // useEffect(() => {
+  //   // Ensure the form is populated with the latest user data
+  //   if (user) {
+  //     setFirstName(user.firstName);
+  //     setLastName(user.lastName);
+  //     setPhotoUrl(user.photoUrl);
+  //   }
+  // }, [user]);
 
   return (
     <>
