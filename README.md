@@ -29,9 +29,9 @@
 - New page - See all my connections
 - New page - See all my connection requests
 - feature accept/reject connection request
+- Send or ignore card from feed
 
 Remaining
 
-- Send or ignore card from feed
 - signup page
 - ETE testing
