@@ -28,3 +28,10 @@
 - Edit profile features build show toast message on save profile
 - New page - See all my connections
 - New page - See all my connection requests
+- feature accept/reject connection request
+
+Remaining
+
+- Send or ignore card from feed
+- signup page
+- ETE testing
