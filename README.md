@@ -39,3 +39,5 @@
 - Launch instance
 - Create a key-val pair
 - chmod 400 secret.pem
+- ssh -i "Dev-Tinder-Secret.pem" ubuntu@ec2-13-61-147-205.eu-north-1.compute.amazonaws.
+- Install node 20.16.0
