@@ -32,3 +32,10 @@
 - Send or ignore card from feed
 - signup page
 - ETE testing
+
+# Deployment
+
+- Sign up on aws
+- Launch instance
+- Create a key-val pair
+- chmod 400 secret.pem
