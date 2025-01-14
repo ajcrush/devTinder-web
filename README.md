@@ -62,3 +62,24 @@
 - pm2 start npm -- start
 - pm2 list ,pm2 log,pm2 flush <name> ,pm2 delete<name>,pm2 stop<name>
 - pm2 start npm --name "devTinder-backend" -- start (if you want to give custom name)
+- config nginx - /etc/nginx/sites-available/default
+- nginx config :
+  server_name http://13.61.145.49;
+
+          location /api {
+          proxy_pass http://localhost:7777/; # Forward requests to the Node.js app
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection 'upgrade';
+          proxy_set_header Host $host;
+          proxy_cache_bypass $http_upgrade;
+          }
+
+- restart nginx sudo systemctl restart nginx
+- Modify the base URL in fe project to /api
+
+- Frontend = 13.61.145.49
+- Backend = 13.61.145.49
+- Domain name = devtinder.com => 13.61.145.49
+- Frontend = 13.61.145.49
+- Backend = 13.61.145.49:7777
