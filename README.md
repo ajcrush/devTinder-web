@@ -83,3 +83,26 @@
 - Domain name = devtinder.com => 13.61.145.49
 - Frontend = 13.61.145.49
 - Backend = 13.61.145.49:7777
+
+# Adding a custom domain name
+
+- purchased domain name devtinder.fun from hosinger
+- sign up on cloudflare
+- change the nameservers on hostinger and point it to cloudflare
+- Wait for sometime till your nameserver are updated ~ 15mins
+- In dns record you have to create A record
+
+# Sending emails via aws ses
+
+- Create a IAM user
+- Give access to amazonSESFullAccess
+- create an identity in AWS ses
+- Verify your domain name
+- verify an email address
+- Install AWS SDK-v3 - https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/javascriptv3/example_code
+- setup SesClient
+- Acess credential should be created in IAM under security credentials tab
+- Add the credentials to the .env file
+- Write code for SesClient
+- Write code for sending email address
+- Make the email dynamic by passing more para to the run function
