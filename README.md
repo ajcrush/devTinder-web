@@ -119,3 +119,7 @@
 - Amazon ses bulk emails
 - Make sendEmail dynamic
 - bee-queue and bull in npm
+
+# Razorpay Payment gateway integration
+
+-sign up razoerpay and complete kyc
