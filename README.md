@@ -123,3 +123,8 @@
 # Razorpay Payment gateway integration
 
 -sign up razoerpay and complete kyc
+
+# Realtime chat using websocket(socket.io)
+
+- Builld the ui for chat window on /chat:targetUserId path
+- Setup socket.io in backend
