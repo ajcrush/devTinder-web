@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { createSocketConnection } from "../utils/socket";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { BASE_URL } from "../utils/constant";
+
 const Chat = () => {
   const { targetUserId } = useParams();
   const [messages, setMessages] = useState([]);
@@ -9,6 +12,27 @@ const Chat = () => {
   const user = useSelector((store) => store.user);
   const userId = user?.data?._id;
   const userName = user?.data?.firstName;
+
+  const messagesEndRef = useRef(null); // Reference for the last message
+
+  const fetchChatMessages = async () => {
+    const chat = await axios.get(BASE_URL + "/chat/" + targetUserId, {
+      withCredentials: true,
+    });
+    const chatMessages = chat?.data?.chat?.messages.map((msg) => {
+      const { sender, text } = msg;
+      return {
+        firstName: sender?.firstName,
+        text: text,
+      };
+    });
+    setMessages(chatMessages);
+  };
+
+  useEffect(() => {
+    fetchChatMessages();
+  }, []);
+
   const sendMessage = () => {
     const socket = createSocketConnection();
     socket.emit("sendMessage", {
@@ -19,6 +43,7 @@ const Chat = () => {
     });
     setNewMessage("");
   };
+
   useEffect(() => {
     if (!userId) {
       return;
@@ -34,22 +59,31 @@ const Chat = () => {
       socket.disconnect();
     };
   }, [userId, targetUserId]);
+
+  // Auto-scroll to the last message whenever messages update
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <div className="w-3/4 mx-auto border border-gray-600 m-5 h-[70vh] flex flex-col">
       <h1 className="p-5 border-b border-gray-600">Chat</h1>
       <div className="flex-1 overflow-scroll p-5">
         {messages.map((msg, index) => {
           return (
-            <div key={index} className="chat chat-start">
-              <div className="chat-header">
-                {msg.firstName}
-                <time className="text-xs opacity-50">2 hours ago</time>
-              </div>
+            <div
+              key={index}
+              className={
+                "chat " +
+                (userName === msg?.firstName ? "chat-end" : "chat-start")
+              }
+            >
+              <div className="chat-header">{`${msg.firstName}`}</div>
               <div className="chat-bubble">{msg.text}</div>
-              <div className="chat-footer opacity-50">Seen</div>
             </div>
           );
         })}
+        <div ref={messagesEndRef} /> {/* Empty div to scroll to */}
       </div>
       <div className="p-5 border-t border-gray-600 flex items-center gap-2">
         <input
