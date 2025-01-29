@@ -4,11 +4,13 @@ import { createSocketConnection } from "../utils/socket";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { BASE_URL } from "../utils/constant";
+import { Filter } from "bad-words";
 
 const Chat = () => {
   const { targetUserId } = useParams();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [block, setBlock] = useState(false);
   const user = useSelector((store) => store.user);
   const userId = user?.data?._id;
   const userName = user?.data?.firstName;
@@ -35,11 +37,17 @@ const Chat = () => {
 
   const sendMessage = () => {
     const socket = createSocketConnection();
+    const filter = new Filter();
+    if (filter.isProfane(newMessage)) {
+      setBlock(true);
+    }
+    const filteredMessage = filter.clean(newMessage);
+
     socket.emit("sendMessage", {
       firstName: userName,
       userId,
       targetUserId,
-      text: newMessage,
+      text: filteredMessage,
     });
     setNewMessage("");
   };
@@ -85,17 +93,21 @@ const Chat = () => {
         })}
         <div ref={messagesEndRef} /> {/* Empty div to scroll to */}
       </div>
-      <div className="p-5 border-t border-gray-600 flex items-center gap-2">
-        <input
-          type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          className="flex-1 border border-gray-500 text-white rounded p-2"
-        />
-        <button onClick={sendMessage} className="btn btn-secondary">
-          Send
-        </button>
-      </div>
+      {!block ? (
+        <div className="p-5 border-t border-gray-600 flex items-center gap-2">
+          <input
+            type="text"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            className="flex-1 border border-gray-500 text-white rounded p-2"
+          />
+          <button onClick={sendMessage} className="btn btn-secondary">
+            Send
+          </button>
+        </div>
+      ) : (
+        <div className="flex justify-center bg-red-600">You are blocked😭</div>
+      )}
     </div>
   );
 };
