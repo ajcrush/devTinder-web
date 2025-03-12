@@ -52,7 +52,10 @@ const Connections = () => {
             </div>
             <div className="ml-auto">
               <Link to={"/chat/" + _id}>
-                <button className="btn btn-primary ">Chat</button>
+                <button className="btn btn-primary">Chat</button>
+              </Link>
+              <Link to={"/video-call/" + _id}>
+                <button className="btn btn-secondary">Video Call</button>
               </Link>
             </div>
           </div>
