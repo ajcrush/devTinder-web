@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 
 const VideoCall = () => {
   const { targetUserId } = useParams();
-  const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
   const [socket, setSocket] = useState(null);
   const [peerConnection, setPeerConnection] = useState(null);
@@ -31,7 +30,9 @@ const VideoCall = () => {
     };
 
     pc.ontrack = (event) => {
-      remoteVideoRef.current.srcObject = event.streams[0];
+      if (remoteVideoRef.current) {
+        remoteVideoRef.current.srcObject = event.streams[0];
+      }
     };
 
     setPeerConnection(pc);
@@ -39,7 +40,6 @@ const VideoCall = () => {
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
       .then((stream) => {
-        localVideoRef.current.srcObject = stream;
         stream.getTracks().forEach((track) => pc.addTrack(track, stream));
       });
 
@@ -76,7 +76,6 @@ const VideoCall = () => {
 
   return (
     <div>
-      <video ref={localVideoRef} autoPlay muted />
       <video ref={remoteVideoRef} autoPlay />
       <button onClick={startCall}>Start Call</button>
     </div>
